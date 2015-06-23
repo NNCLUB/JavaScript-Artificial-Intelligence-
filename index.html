@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Javascript Artificial Inteligence</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap core CSS -->
+<link href="res/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap theme -->
+<link href="res/css/bootstrap-theme.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="theme.css" rel="stylesheet">
+
+<style>
+
+body {
+
+//margin: 0px;
+//padding: 0px 5px 5px 5px;
+
+}
+
+#screen {
+
+//margin: 10px 10px 10px 10px;
+padding: 10px 10px 70px 10px;
+border: 1px solid silver;
+
+height: 350px;
+overflow: hidden;
+overflow-y: auto;
+
+box-shadow: 5px 5px 10px #000;
+
+}
+
+input[type=text] {
+
+//margin: 5px 10px 5px 10px;
+padding: 5px 5px 5px 5px;
+//width: 1400px;
+font-size: 14px;
+//border-radius: 0;
+//-webkit-appearance: none;
+
+}
+
+.alert {
+
+padding: 2px 5px 2px 5px !important;
+
+}
+
+.navbar-header {
+  text-align: center !important;
+}
+
+</style>
+</head>
+
+<body>
+<div class="container-fluid">
+<nav class="navbar bg-primary navbar-default" role="navigation">
+<div class="container-fluid">
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header">
+
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+
+<a class="navbar-brand" href="#">Javascript Artificial Inteligence <sub><span class="label label-warning">By Chris Muiruri N.</span></sub></a>
+</div>
+
+<!-- ul class="nav navbar-nav navbar-right">
+<li><a href="#">Link</a></li>
+</ul -->
+
+</div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>
+
+<div class="container-fluid">
+
+<div class="panel panel-default">
+<div class="panel-body" id="screen">    
+&nbsp;
+</div>
+</div>
+
+</div>
+</div>
+
+<nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+<div class="container">
+
+<div class="form-group">
+<label for="input">let's Chat...</label>
+<input type="text" class="form-control" id="input" placeholder="Type Some Text Here...">
+</div>
+
+</div>
+</nav>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="res/js/jquery.min.js"></script>
+<script src="res/js/bootstrap.min.js"></script>
+<!-- script src="res/js/docs.min.js"></script -->
+
+<script>
+$(document).ready(function() {
+console.log('Page Ready');
+//Jquery script
+});
+</script>
+
+
+<script src="krisDictionery.js"></script>
+<script>
+
+console.log("Javascript Artificial Inteligence...by Me");
+var input = document.getElementById("input"); //input[type=text] reference
+var out = document.getElementById("screen"); //div->#dcreen reference
+
+var searchFunc = function(str, term) {
+/* str; For example, lets search this string */
+/* term;  for the term "world" */
+var index = str.search(term); // and get its index.
+if(index != -1){// If the index is not -1 then the term was matched in the string,
+return 1; // and we can do some work based on that logic. 
+} else {
+return 0;
+} 
+}
+
+/* this took me almost a whole day to figure out */
+function returnDicValue(dic, str) {
+
+var arr = [];
+// dic being the dictionary
+for (var prop in dic) {
+if(searchFunc(prop, str) == 1) {
+arr += prop+"|";
+} else {
+arr += ""; 
+}
+}
+return arr;
+}
+
+
+/** function that removes last punctuation in a statement **/
+var removeLastPunc = function(userQuiz) {
+
+/* remove commas question marks and apostrophe */
+var lastChar = userQuiz.charAt(userQuiz.length - 1);  /* get the last character */
+/* check to see if the char is a comma or a question mark or apostrophe */
+if(lastChar == "." || lastChar == "?" || lastChar == "!") {
+/* remove/replace the character */
+console.log("The re-formated user input: "+userQuiz.substring(0, userQuiz.length - 1));
+return userQuiz.substring(0, userQuiz.length - 1);
+
+} else {
+console.log("The re-formated user input: "+userQuiz);
+return userQuiz;      
+}
+
+}
+
+
+//@param = user input
+var krisRespond = function(userQuiz) {
+console.log("am going to code some AI right here! ha! ha! ha! ha!");
+console.log("The Original user res: "+userQuiz);
+
+var dataIn = removeLastPunc(userQuiz);
+
+/** Campare to see if the dataIn(full statement) matches anything in the Dictionary **/	
+if(krisDictionery[dataIn.toUpperCase()]) {  //it it is true
+var r = parseInt(Math.random() * krisDictionery[dataIn.toUpperCase()].length);	
+var res = krisDictionery[dataIn.toUpperCase()][r];  /** Coverts to Uppercase **/
+out.innerHTML += "<div class=\"alert alert-info\" role=\"alert\">Kris: &raquo; "+res+"</div>";
+console.log("The Response "+res);
+
+
+} else if(returnDicValue(krisDictionery, dataIn.toUpperCase()) != 0) {
+
+var txt = returnDicValue(krisDictionery, dataIn.toUpperCase());
+var txt2 = txt.split("|");
+var l = txt2.length;
+var rl = parseInt(Math.random() * (+l- +1));
+console.log(rl);
+console.log(txt2[rl]);
+var newDataIn = txt2[rl];
+
+var rand2 = parseInt(Math.random() * krisDictionery[newDataIn].length); 
+var res2 = krisDictionery[newDataIn][rand2]; 
+out.innerHTML += "<div class=\"alert alert-success\" role=\"alert\">Kris: &raquo; "+res2+"</div>";
+console.log("The Response "+res2);
+
+
+} else { //if it is false
+
+/** if the dataIn(full statement) is not found in the Dictionary **/
+var krisDefault = [
+"Am sorry but i cannot answer that!",
+"Please stop joking around."
+];
+
+var ramdomDefault = krisDefault[Math.floor(Math.random()*krisDefault.length)];
+out.innerHTML += "<div class=\"alert alert-danger\" role=\"alert\">Kris: &raquo; "+ramdomDefault+"</div>";
+
+}
+
+out.scrollTop = out.scrollHeight; /* Scroll to where the text is appended */
+
+}
+
+/** when the user takes too long to respond **/
+var timeOutFunc = function(t) {
+var checkOnUser = setTimeout(function() {
+//lentior: In latin means 'too slow'  
+krisRespond("lentior"); /*^ the function that does the logics ^*/
+out.scrollTop = out.scrollHeight; /* Scroll to where the text is appended */
+}, t);
+}
+
+
+/* start the conversation */
+var sayHi = setTimeout(function() {
+console.log(">> Time to say HI");
+krisRespond("initiate"); /*^ the function that does the logics ^*/
+out.scrollTop = out.scrollHeight; /* Scroll to where the text is appended */
+}, 5000); 
+
+input.focus();
+input.select();
+
+input.onkeypress = function(e) {
+var val = this.value;
+/* when the user presses the 'ENTER KEY' */
+if(e.which == 13) {
+this.value = ""; //Clear the 'input Type'
+clearTimeout(sayHi);  //Clear the timeout
+console.log("Enter Key is Pressed!");
+out.innerHTML += "<div class=\"alert alert-warning\" role=\"alert\">Me: &raquo; "+val+"</div>"; 
+setTimeout(function() {
+krisRespond(val); /*^ the function that does the logics ^*/
+out.scrollTop = out.scrollHeight; /* Scroll to where the text is appended */
+}, 1500); 
+}
+}
+
+
+</script>
+
+</body>
+</html>
