@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Dictionery</title>
+
+<style>
+
+body {
+
+}
+
+header h2 {
+	text-align: center;
+	font-weight: bolder;
+	text-decoration: underline;
+}
+
+#main {
+	max-height: 500px;
+	min-height: 500px;
+	overflow: auto;
+}
+
+#main h3 {
+	text-align: center;
+	font-weight: bolder;	
+	text-decoration: underline;
+}
+
+table {
+	margin: 5px 9% 5px 9%;
+	
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;    
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h2>Dictionery Data</h2>
+</header>
+
+
+<section id="main">
+<h3>Content</h3>
+<div id="main_container">
+<!-- content in The Dictionary should appear here -->
+
+<table border="1">
+
+</table>
+
+</div>
+</section>
+
+<script src="krisDictionery.js"></script>
+
+<script>
+
+var txt = "";
+
+txt += "<table style='width:80%'>";
+txt += "<thead><tr><th>Input:</th><th>Output</th></tr></thead>";
+
+
+var prop = [];
+// dic being the dictionary
+for (prop in krisDictionery) {
+    console.log(prop+" _ _ "+krisDictionery[prop].length);
+    txt += "<tr><td rowspan='"+krisDictionery[prop].length+"'>"+prop+"</td><td>"+krisDictionery[prop][0]+"</td></tr>";
+    for(var n = 1; n < krisDictionery[prop].length; ++n) {
+        txt += "<tr><td>"+krisDictionery[prop][n]+"</td></tr>";        
+    }
+        
+}
+
+txt += "</table>";
+document.getElementById("main_container").innerHTML = txt;
+
+</script>
+</body>
+<html>
